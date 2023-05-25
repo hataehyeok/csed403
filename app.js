@@ -4,7 +4,6 @@ const app = express();
 const web3 = new Web3('http://127.0.0.1:2210');
 
 const port = 3000;
-//const port = 2210;
 
 let accounts = [];
 
@@ -28,8 +27,7 @@ async function getBalances() {
 }
 
 app.set('view engine', 'ejs');
-
-app.use(express.urlencoded({ extended: true })); // Enable body-parser middleware for parsing form data
+app.use(express.json());
 
 app.get('/', async (req, res) => {
   const balances = await getBalances();
@@ -37,6 +35,7 @@ app.get('/', async (req, res) => {
 });
 
 app.post('/sendETH', async (req, res) => {
+  console.log(req.body);
   const { transmitter, recipientAddress, amount, password } = req.body;
 
   try {
@@ -61,9 +60,3 @@ app.post('/sendETH', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on http://127.0.0.1:${port}`);
 });
-
-
-
-
-
-
